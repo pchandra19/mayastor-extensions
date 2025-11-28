@@ -10,6 +10,7 @@ on:
 
 env:
   TAG: ${{ inputs.tag }}
+  CI: 1
 
 jobs:
   preflight-checks:
@@ -36,7 +37,7 @@ jobs:
 
       - name: Validate if the staging should be even made
         run: |
-          nix-shell --pure --run "./dependencies/control-plane/utils/dependencies/scripts/staging/validate.sh \
+          nix-shell --pure --keep CI --keep TAG --run "./dependencies/control-plane/utils/dependencies/scripts/staging/validate.sh \
             --tag ${TAG} \
             --type staging \
             --chart true" \
@@ -87,7 +88,7 @@ jobs:
 
       - name: Push kubectl binaries to GHCR
         run: |
-          nix-shell --pure --run "./dependencies/control-plane/utils/dependencies/scripts/staging/kubectl-oci.sh push\
+          nix-shell --pure --keep CI --keep TAG --run "./dependencies/control-plane/utils/dependencies/scripts/staging/kubectl-oci.sh push\
             --tag ${TAG} \
             --namespace ${{ github.repository_owner }}/mayastor/dev/plugin \
             --username ${{ github.actor }} \
