@@ -38,9 +38,9 @@ jobs:
         run: |
           nix-shell --pure --run "./dependencies/control-plane/utils/dependencies/scripts/staging/validate.sh \
             --tag ${TAG} \
-            --type staging" ./dependencies/control-plane/utils/dependencies/scripts/staging/shell.nix
-            --chart true
-
+            --type staging \
+            --chart true" \
+            ./dependencies/control-plane/utils/dependencies/scripts/staging/shell.nix
   build-images:
     needs: preflight-checks
     uses: ./.github/workflows/image.yml

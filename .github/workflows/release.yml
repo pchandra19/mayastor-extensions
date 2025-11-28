@@ -32,8 +32,9 @@ jobs:
         run: |
           nix-shell --pure --run "./dependencies/control-plane/utils/dependencies/scripts/staging/validate.sh \
             --tag ${{ github.ref_name }} \
-            --type release" ./dependencies/control-plane/utils/dependencies/scripts/staging/shell.nix
-            --chart true
+            --type release \
+            --chart true" \
+            ./dependencies/control-plane/utils/dependencies/scripts/staging/shell.nix
 
   release-images:
     runs-on: ubuntu-latest
@@ -67,11 +68,11 @@ jobs:
 
       - name: Mirror images from dev to Docker Hub
         run: |
-          nix-shell --pure --run "./scripts/staging/mirror-images.sh \
+          nix-shell --pure --run "./dependencies/control-plane/utils/dependencies/scripts/staging/mirror-images.sh \
             --source ghcr.io/${{ github.repository_owner }}/mayastor/dev \
             --target docker.io/${{ github.repository_owner }} \
-            --tag ${{ github.ref_name }}" \
-            --chart true \
+            --tag ${{ github.ref_name }} \
+            --chart true" \
             ./dependencies/control-plane/utils/dependencies/scripts/staging/shell.nix
 
   release-kubectl-binaries:
@@ -95,7 +96,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          nix-shell --pure --run "./scripts/staging/kubectl-oci.sh pull \
+          nix-shell --pure --run "./dependencies/control-plane/utils/dependenciesscripts/staging/kubectl-oci.sh pull \
             --tag ${{ github.ref_name }} \
             --namespace ${{ github.repository_owner }}mayastor/dev/plugin \
             --username ${{ github.actor }} \
