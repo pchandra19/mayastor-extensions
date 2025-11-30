@@ -48,7 +48,7 @@ jobs:
     with:
       tag: ${{ inputs.tag }}
       registry: ghcr.io
-      namespace: ${{ github.repository_owner }}/mayastor/dev
+      namespace: mayastor/dev
     secrets: inherit
 
   build-binaries:
