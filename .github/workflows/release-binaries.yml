@@ -22,10 +22,27 @@ jobs:
       matrix:
         include:
           # NOTE: Update the .krew.yaml file (if required) when making changes here.
-          - os: oracle-vm-8cpu-32gb-x86-64
+          # - os: oracle-vm-8cpu-32gb-x86-64
+          #   target: linux-musl
+          #   arch: x86_64
+          # - os: oracle-vm-8cpu-32gb-x86-64
+          #   target: linux-musl
+          #   arch: aarch64
+          # - os: macos-14
+          #   target: apple-darwin
+          #   arch: aarch64
+          # - os: macos-13
+          #   target: apple-darwin
+          #   arch: x86_64
+          #   platform: x86_64-darwin
+          # - os: oracle-vm-8cpu-32gb-x86-64
+          #   target: windows-gnu
+          #   arch: x86_64
+          #   suffix: .exe
+          - os: ubuntu-latest
             target: linux-musl
             arch: x86_64
-          - os: oracle-vm-8cpu-32gb-x86-64
+          - os: ubuntu-latest
             target: linux-musl
             arch: aarch64
           - os: macos-14
@@ -35,7 +52,7 @@ jobs:
             target: apple-darwin
             arch: x86_64
             platform: x86_64-darwin
-          - os: oracle-vm-8cpu-32gb-x86-64
+          - os: ubuntu-latest
             target: windows-gnu
             arch: x86_64
             suffix: .exe
@@ -81,7 +98,7 @@ jobs:
         run: |
           # NOTE: Update the .krew.yaml file (if required) when making changes here.
           tar -czvf kubectl-mayastor-${{ matrix.arch }}-${{ matrix.target }}.tar.gz LICENSE -C result/bin kubectl-mayastor${{ matrix.suffix }}
-          
+
       - uses: actions/upload-artifact@v4
         with:
           name: kubectl-mayastor-${{ matrix.arch }}-${{ matrix.target }}
