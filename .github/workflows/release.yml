@@ -102,7 +102,7 @@ jobs:
         run: |
           nix-shell --pure --keep CI --keep TAG --run "./dependencies/control-plane/utils/dependencies/scripts/staging/kubectl-oci.sh pull \
             --tag ${{ github.ref_name }} \
-            --namespace ${{ github.repository_owner }}mayastor/dev/plugin \
+            --namespace ${{ github.repository_owner }}/mayastor/dev/plugin \
             --username ${{ github.actor }} \
             --password ${{ secrets.GITHUB_TOKEN }}" ./dependencies/control-plane/utils/dependencies/scripts/staging/shell.nix
 
@@ -137,16 +137,16 @@ jobs:
           echo "CHART_VERSION=$VERSION" >> $GITHUB_ENV
 
           rm -rf charts
-          mkdir -p charts-staged charts-final charts
+          mkdir -p charts-staged charts-final chart
 
           CHART_REF=oci://ghcr.io/${IMAGE_ORG}/mayastor/dev/helm/
           helm pull "$CHART_REF" \
             --version ${VERSION} \
             --destination charts-staged
 
-          tar -xzf charts-staged/openebs-"$VERSION".tgz -C charts-final
+          tar -xzf charts-staged/mayastor-"$VERSION".tgz -C charts-final
 
-          mv charts-final/mayastor/* charts
+          mv charts-final/mayastor/* chart
 
       - name: Publish helm chart
         uses: stefanprodan/helm-gh-pages@v1.7.0
@@ -162,7 +162,7 @@ jobs:
           name: mayastor
           repository: ${{ github.repository_owner }}/charts
           tag: ${{ env.CHART_VERSION }}
-          path: ./charts
+          path: ./chart
           registry: ghcr.io
           registry_username: ${{ github.actor }}
           registry_password: ${{ secrets.GITHUB_TOKEN }}
