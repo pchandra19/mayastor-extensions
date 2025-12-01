@@ -100,7 +100,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          nix-shell --pure --keep CI --keep TAG --run "./dependencies/control-plane/utils/dependenciesscripts/staging/kubectl-oci.sh pull \
+          nix-shell --pure --keep CI --keep TAG --run "./dependencies/control-plane/utils/dependencies/scripts/staging/kubectl-oci.sh pull \
             --tag ${{ github.ref_name }} \
             --namespace ${{ github.repository_owner }}mayastor/dev/plugin \
             --username ${{ github.actor }} \
